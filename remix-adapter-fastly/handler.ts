@@ -42,26 +42,23 @@ Response.prototype.clone = function () {
   });
 };
 
-type ByteArray = number[];
-
-// Until fastly adds proper request cloning (or implements request.formData),
-// we can't run .text on the body to parse form data.
+// Until fastly adds proper request cloning (or just implements request.formData),
+// we can't run .text on the request to parse form data.
 // Instead, parse the body as a byte array into a string
-async function readBody(reader: ReadableStreamDefaultReader) {
-  const byteArray: ByteArray = [];
+async function readBody(reader: ReadableStreamDefaultReader<ArrayBuffer>) {
+  let text = "";
+  const decoder = new TextDecoder();
 
-  async function read() {
+  // eslint-disable-next-line no-constant-condition
+  while (true) {
     const { done, value } = await reader.read();
     if (done) {
-      return;
+      break;
     }
-    byteArray.push(...value);
-    await read();
+    text += decoder.decode(value);
   }
 
-  await read();
-
-  return String.fromCharCode(...byteArray);
+  return text;
 }
 
 // Patch .formData on the request
