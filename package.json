@@ -1,0 +1,28 @@
+{
+  "private": true,
+  "name": "remix-adapter-fastly",
+  "license": "MIT",
+  "scripts": {
+    "clean": "git clean -fdX .",
+    "lint": "eslint --ext .tsx,.ts,.js,.jsx .",
+    "start": "npm run build -w remix-adapter-fastly && npm run start -w app",
+    "build": "npm run build -w remix-adapter-fastly && npm run build -w app",
+    "deploy": "npm run build -w remix-adapter-fastly && npm run deploy -w app"
+  },
+  "workspaces": [
+    "app",
+    "remix-adapter-fastly"
+  ],
+  "engines": {
+    "node": ">=14"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.10.0",
+    "@typescript-eslint/parser": "^5.10.0",
+    "eslint": "^8.7.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.28.0",
+    "prettier": "^2.5.1"
+  }
+}

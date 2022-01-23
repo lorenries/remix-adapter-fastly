@@ -1,0 +1,25 @@
+# This file describes a Fastly Compute@Edge package. To learn more visit:
+# https://developer.fastly.com/reference/fastly-toml/
+
+description = "Running remix on compute@edge"
+language = "javascript"
+manifest_version = 2
+name = "fastly-remix-demo"
+service_id = ""
+
+[local_server]
+
+  [local_server.backends]
+
+    [local_server.backends.s3_backend]
+      override_host = "S3_BUCKET.s3.us-east-1.amazonaws.com"
+      url = "https://S3_BUCKET.s3.amazonaws.com"
+
+  [local_server.dictionaries]
+
+    [local_server.dictionaries.s3_config]
+      file = "s3.json"
+      format = "json"
+
+[scripts]
+  build = "npm run build && npm run sync"
