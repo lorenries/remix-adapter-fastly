@@ -4,9 +4,10 @@
   "description": "",
   "license": "MIT",
   "type": "module",
-  "main": "../dist/remix-adapter-fastly/index.js",
+  "main": "../dist/index.js",
+  "module": "../dist/esm/index.js",
   "scripts": {
-    "build": "tsc --build"
+    "build": "tsup index.ts --target es2021 --format esm,cjs --legacy-output && tsup magicExports/platform.ts --format esm,cjs --legacy-output --outDir dist/magicExports"
   },
   "dependencies": {
     "@fastly/js-compute": "^0.2.1",
